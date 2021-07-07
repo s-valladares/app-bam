@@ -1,15 +1,20 @@
 export interface IVehiculos {
     id?: number;
     marca: string;
+    descripcion: string;
     linea: string;
+    color: string;
     tipo: string;
     modelo: number;
     costo: number;
+    cantidad: number;
     precio: number;
-    image: string
+    cc: number;
+    v: number;
+    image: string;
     formaPago: string
+    numeroPagos: number;
     createdAt: Date;
-    updatedAt: Date;
 }
 
 export class Vehiculos {
@@ -21,11 +26,16 @@ export class Vehiculos {
             tipo: '',
             modelo: 0,
             costo: 0,
+            cantidad: 0,
             precio: 0,
             image: '',
+            color: '',
             formaPago: '',
-            createdAt: new Date(),
-            updatedAt: new Date()
+            numeroPagos: 0,
+            descripcion: '',
+            cc: 0,
+            v: 0,
+            createdAt: new Date()
         } as IVehiculos
     }
 }
