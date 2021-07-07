@@ -10,7 +10,7 @@ export interface IVehiculos {
     cantidad: number;
     precio: number;
     cc: number;
-    v: number;
+    v: string;
     image: string;
     formaPago: string
     numeroPagos: number;
@@ -34,7 +34,7 @@ export class Vehiculos {
             numeroPagos: 0,
             descripcion: '',
             cc: 0,
-            v: 0,
+            v: '',
             createdAt: new Date()
         } as IVehiculos
     }

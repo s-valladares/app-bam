@@ -12,128 +12,177 @@
 
             <form [formGroup]="mForma">
 
-                <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
-                        formControlName="marca">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                formControlName="marca">
 
-                        <option value="1">Mazda</option>
-                        <option value="2">Toyota</option>
-                        <option value="3">Honda</option>
-                    </select>
-                    <label for="floatingSelect">Marca</label>
+                                <option [value]="item.nombre" *ngFor="let item of marcas">{{item.nombre}}</option>
+                            </select>
+                            <label for="floatingSelect">Marca</label>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                formControlName="linea">
+                                <option [value]="item.nombre" *ngFor="let item of lineas">{{item.nombre}}</option>
+                            </select>
+                            <label for="floatingSelect">Línea</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                formControlName="color">
+                                <option [value]="item.nombre" *ngFor="let item of colores">{{item.nombre}}</option>
+                            </select>
+                            <label for="floatingSelect">Color</label>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingInput" placeholder="Modelo"
+                                formControlName="modelo">
+                            <label for="floatingInput">Modelo</label>
+                        </div>
+                    </div>
                 </div>
 
 
-                <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
-                        formControlName="linea">
-                        <option value="1" *ngFor="let item of lineas">{{item.nombre}}</option>
-                    </select>
-                    <label for="floatingSelect">Línea</label>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                formControlName="tipo">
+
+                                <option [value]="item.nombre" *ngFor="let item of tipos">{{item.nombre}}</option>
+                            </select>
+                            <label for="floatingSelect">Tipo</label>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                formControlName="formaPago">
+
+                                <option value="Crédito">Crédito</option>
+                                <option value="Contado">Contado</option>
+                            </select>
+                            <label for="floatingSelect">Forma de pago</label>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
-                        formControlName="color">
-                        <option value="1" *ngFor="let item of colores">{{item.nombre}}</option>
-                    </select>
-                    <label for="floatingSelect">Colores</label>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                formControlName="numeroPagos">
+
+                                <option value="0">0</option>
+                                <option value="12">12</option>
+                                <option value="24">24</option>
+                                <option value="36">36</option>
+                            </select>
+                            <label for="floatingSelect">Número de pagos</label>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                formControlName="cc">
+
+                                <option value="1500">1500</option>
+                                <option value="2000">2000</option>
+                                <option value="2500">2500</option>
+                            </select>
+                            <label for="floatingSelect">Cilindraje</label>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="floatingInput" placeholder="Modelo"
-                        formControlName="modelo">
-                    <label for="floatingInput">Modelo</label>
+
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                formControlName="v">
+                                <option value="V4">V4</option>
+                                <option value="V6">V6</option>
+                                <option value="V8">V8</option>
+                            </select>
+                            <label for="floatingSelect">Motor</label>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                formControlName="concesionarioId">
+
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="3">4</option>
+                            </select>
+                            <label for="floatingSelect">Concesionario</label>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
-                        formControlName="tipo">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingInput" placeholder="Costo"
+                                formControlName="costo">
+                            <label for="floatingInput">Costo</label>
+                        </div>
 
-                        <option value="1">Pickup</option>
-                        <option value="2">Camioneta</option>
-                        <option value="3">Automóvil</option>
-                    </select>
-                    <label for="floatingSelect">Tipo</label>
+
+                    </div>
+
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingInput" placeholder="Precio"
+                                formControlName="precio">
+                            <label for="floatingInput">Precio</label>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
-                        formControlName="formaPago">
 
-                        <option value="1">Crédito</option>
-                        <option value="2">Contado</option>
-                    </select>
-                    <label for="floatingSelect">Forma de pago</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
-                        formControlName="numeroPagos">
-
-                        <option value="1">Número de pagos</option>
-                        <option value="2">0</option>
-                        <option value="2">12</option>
-                        <option value="3">24</option>
-                        <option value="3">36</option>
-                    </select>
-                    <label for="floatingSelect">Número de pagos</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
-                        formControlName="cc">
-
-                        <option value="1">Cilindraje</option>
-                        <option value="2">1500</option>
-                        <option value="3">2000</option>
-                        <option value="3">2500</option>
-                    </select>
-                    <label for="floatingSelect">Cilindraje</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
-                        formControlName="v">
-
-                        <option value="1">Motor</option>
-                        <option value="2">V4</option>
-                        <option value="3">V6</option>
-                        <option value="3">V8</option>
-                    </select>
-                    <label for="floatingSelect">Marca</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
-                        formControlName="concesionarioId">
-
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="3">4</option>
-                    </select>
-                    <label for="floatingSelect">Concesionario</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="floatingInput" placeholder="Costo"
-                        formControlName="costo">
-                    <label for="floatingInput">Costo</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="floatingInput" placeholder="Precio"
-                        formControlName="precio">
-                    <label for="floatingInput">Precio</label>
-                </div>
 
                 <div class="form-floating mb-3">
                     <input type="number" class="form-control" id="floatingInput" placeholder="Cantidad"
                         formControlName="cantidad">
                     <label for="floatingInput">Cantidad</label>
                 </div>
-                <button type="button" class="btn btn-outline-primary" (click)="onSubmit()">Guardar</button>
+
+                <div class="d-flex justify-content-center">
+                    <button type=" button" class="btn btn-outline-primary" (click)="onSubmit()">Guardar</button>
+                </div>
+
+
+
             </form>
 
             <br>
@@ -147,6 +196,7 @@
         </div>
 
         <div class="col mx2">
+
             <table class="table">
                 <thead>
                     <tr>

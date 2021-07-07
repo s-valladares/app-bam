@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { getHeaders } from 'src/app/config/headers';
 import { Urls } from 'src/app/config/utilitis';
+import { IVehiculos } from './vehiculos';
 
 @Injectable({
   providedIn: 'root'
@@ -28,45 +29,45 @@ export class VehiculosService {
       })).toPromise();
   }
 
-  /*
-    async new(pDatos: any) {
-      const lDatos = JSON.stringify(pDatos);
-      return await this.httpClient.post(this.mUrl + this.mService, lDatos, {
-        headers: getHeaders()
-      }).pipe(
-        map((data: any) => {
-          return data;
-        })).toPromise();
-    }
-  
-  
-  
-    async getById(pKey: any) {
-      return await this.httpClient.get(this.mUrl + this.mService + '/' + pKey, {
-        headers: getHeaders()
-      }).pipe(
-        map((data: any) => {
-          return data;
-        })).toPromise();
-    }
-  
-  
-    async update(pObj: any, pKey: number) {
-      const jObj = JSON.stringify(pObj);
-      return await this.httpClient.put(this.mUrl + this.mService + '/' + pKey, jObj,
-        { headers: getHeaders() })
-        // tslint:disable-next-line: arrow-return-shorthand
-        .pipe(map((data: any) => { return data; }))
-        .toPromise();
-    }
-  
-  
-    async delete(pKey: number) {
-      return await this.httpClient.delete(this.mUrl + this.mService + '/' + pKey,
-        { headers: getHeaders() }).pipe(
-          map((data: any) => {
-            return data;
-          })).toPromise();
-    }
-  */
+
+  async new(vehiculo: IVehiculos) {
+    const lDatos = JSON.stringify(vehiculo);
+    return await this.httpClient.post(this.url + this.recurso, lDatos, {
+      headers: getHeaders()
+    }).pipe(
+      map((data: any) => {
+        return data;
+      })).toPromise();
+  }
+
+  /* 
+   
+     async getById(pKey: any) {
+       return await this.httpClient.get(this.mUrl + this.mService + '/' + pKey, {
+         headers: getHeaders()
+       }).pipe(
+         map((data: any) => {
+           return data;
+         })).toPromise();
+     }
+   
+   
+     async update(pObj: any, pKey: number) {
+       const jObj = JSON.stringify(pObj);
+       return await this.httpClient.put(this.mUrl + this.mService + '/' + pKey, jObj,
+         { headers: getHeaders() })
+         // tslint:disable-next-line: arrow-return-shorthand
+         .pipe(map((data: any) => { return data; }))
+         .toPromise();
+     }
+   
+   
+     async delete(pKey: number) {
+       return await this.httpClient.delete(this.mUrl + this.mService + '/' + pKey,
+         { headers: getHeaders() }).pipe(
+           map((data: any) => {
+             return data;
+           })).toPromise();
+     }
+   */
 }

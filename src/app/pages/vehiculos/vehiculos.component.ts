@@ -16,6 +16,8 @@ export class VehiculosComponent implements OnInit {
   loading: boolean;
   lineas: any[];
   colores: any[];
+  marcas: any[];
+  tipos: any[];
   submitted = false;
   mForma: FormGroup;
 
@@ -29,6 +31,8 @@ export class VehiculosComponent implements OnInit {
     this.loading = false;
     this.lineas = [];
     this.colores = []
+    this.marcas = [];
+    this.tipos = [];
     this.mForma = this.generarFormulario();
   }
 
@@ -36,6 +40,8 @@ export class VehiculosComponent implements OnInit {
     this.getAll();
     this.getLineas();
     this.getColores();
+    this.getMarcas();
+    this.getTipos();
   }
 
   getAll() {
@@ -47,6 +53,18 @@ export class VehiculosComponent implements OnInit {
     }).catch(error => {
       this.toast.error('Ocurrió un error al obtener los vehículos');
       this.loading = false;
+    });
+  }
+
+  insertarVehiculo() {
+    this.serviceVehiculo.new(this.vehiculo).then(data => {
+      this.mForma.reset();
+      this.vehiculos.push(this.vehiculo);
+      this.toast.success(data.message);
+      alert(data.message);
+      console.log(data);
+    }).catch(error => {
+      this.toast.success(error.message);
     });
   }
 
@@ -88,6 +106,23 @@ export class VehiculosComponent implements OnInit {
     ]
   }
 
+  getMarcas() {
+    this.marcas = [
+      { nombre: 'Toyota' },
+      { nombre: 'Honda' },
+      { nombre: 'Mazda' }
+    ]
+  }
+
+  getTipos() {
+    this.tipos = [
+      { nombre: 'Camioneta' },
+      { nombre: 'Automóvil' },
+      { nombre: 'Pickup' },
+      { nombre: 'Microbus' }
+    ]
+  }
+
   generarFormulario() {
     return this.FormBuil.group({
       marca: ['',],
@@ -109,6 +144,7 @@ export class VehiculosComponent implements OnInit {
   onSubmit() {
     this.vehiculo = this.mForma.value as IVehiculos;
     console.log(this.vehiculo);
+    this.insertarVehiculo();
   }
 
 }
