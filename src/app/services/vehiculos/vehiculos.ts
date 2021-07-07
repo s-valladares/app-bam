@@ -13,6 +13,7 @@ export interface IVehiculos {
     v: string;
     image: string;
     formaPago: string
+    concesionarioId: number;
     numeroPagos: number;
     createdAt: Date;
 }
@@ -33,6 +34,7 @@ export class Vehiculos {
             formaPago: '',
             numeroPagos: 0,
             descripcion: '',
+            concesionarioId: 0,
             cc: 0,
             v: '',
             createdAt: new Date()

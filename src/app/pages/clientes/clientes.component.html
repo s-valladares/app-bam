@@ -1,1 +1,177 @@
-<p>clientes works!</p>
+<div class="mt-5 px-5">
+
+    <div class="row">
+
+        <div class="col col-lg-4">
+
+
+            <h3>Agregar cliente</h3>
+            <br>
+
+            <form [formGroup]="mForma">
+
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Nombres"
+                                formControlName="nombres">
+                            <label for="floatingInput">Nombres</label>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Apellidos"
+                                formControlName="apellidos">
+                            <label for="floatingInput">Apellidos</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Direccion"
+                                formControlName="direccion">
+                            <label for="floatingInput">Dirección</label>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Teléfono"
+                                formControlName="telefono">
+                            <label for="floatingInput">Teléfono</label>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Correo electrónico"
+                                formControlName="email">
+                            <label for="floatingInput">Correo electrónico</label>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Nivel academémico"
+                                formControlName="nivelAcademico">
+                            <label for="floatingInput">Nivel academémico</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Profesión"
+                                formControlName="profesion">
+                            <label for="floatingInput">Profesión</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                formControlName="concesionarioId">
+
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="3">4</option>
+                            </select>
+                            <label for="floatingSelect">Concesionario</label>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="d-flex justify-content-center">
+                    <button type=" button" class="btn btn-outline-primary" (click)="onSubmit()">Guardar</button>
+                </div>
+
+
+
+            </form>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+
+        </div>
+
+        <div class="col mx2">
+            <h4 class="text-center">Listado de clientes</h4>
+            <br>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre del cliente</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Email</th>
+                        <th colspan="3" class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of clientes; let i = index">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{item.nombres}} {{item.apellidos}}</td>
+                        <td>{{item.direccion }}</td>
+                        <td>{{item.telefono }}</td>
+                        <td>{{item.email}}</td>
+                        <td>
+                            <a href="javascript:void(0)" (click)="ver(item.id)" class="text-muted">
+                                <i title="Ver información" class="fa fa-eye">V</i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" class="text-muted">
+                                <i title="Modificar" (click)="modificar(item.id)" class="fa fa-pencil">U</i>
+                            </a>
+                        </td>
+
+                        <td>
+                            <a href="javascript:void(0)" (click)="eliminar( item.id)" class="text-muted">
+                                <i title="Eliminar" class="fa fa-trash">D</i>
+                            </a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>

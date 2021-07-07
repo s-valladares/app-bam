@@ -9,7 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { SharedModule } from '../shared/shared.module';
 import { AgentesComponent } from './agentes/agentes.component';
 import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
-import { ConcesionariosComponent } from './concesionarios/concesionarios.component';
+import { ConcesionarioComponent } from './concesionario/concesionario.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { ConcesionariosComponent } from './concesionarios/concesionarios.compone
     HomeComponent,
     AgentesComponent,
     CotizacionesComponent,
-    ConcesionariosComponent
+    ConcesionarioComponent
   ],
   imports: [
     CommonModule,

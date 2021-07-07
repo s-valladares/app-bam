@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConcesionariosComponent } from './concesionarios.component';
+import { ConcesionarioComponent } from './concesionario.component';
 
-describe('ConcesionariosComponent', () => {
-  let component: ConcesionariosComponent;
-  let fixture: ComponentFixture<ConcesionariosComponent>;
+describe('ConcesionarioComponent', () => {
+  let component: ConcesionarioComponent;
+  let fixture: ComponentFixture<ConcesionarioComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConcesionariosComponent ]
+      declarations: [ ConcesionarioComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConcesionariosComponent);
+    fixture = TestBed.createComponent(ConcesionarioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
