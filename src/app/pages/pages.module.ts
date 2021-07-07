@@ -7,12 +7,18 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { VehiculosComponent } from './vehiculos/vehiculos.component';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from '../shared/shared.module';
+import { AgentesComponent } from './agentes/agentes.component';
+import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
+import { ConcesionariosComponent } from './concesionarios/concesionarios.component';
 
 @NgModule({
   declarations: [
     ClientesComponent,
     VehiculosComponent,
-    HomeComponent
+    HomeComponent,
+    AgentesComponent,
+    CotizacionesComponent,
+    ConcesionariosComponent
   ],
   imports: [
     CommonModule,
