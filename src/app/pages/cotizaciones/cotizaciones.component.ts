@@ -36,6 +36,7 @@ export class CotizacionesComponent implements OnInit {
   modalCotizar: boolean;
   modalRef: any;
   totalCotizacion: number;
+  search: string;
 
   constructor(
     private serviceCotizacion: CotizacionesService,
@@ -61,6 +62,7 @@ export class CotizacionesComponent implements OnInit {
     this.agentes = [];
     this.mForma = this.generarFormulario();
     this.totalCotizacion = 0;
+    this.search = '';
   }
 
   ngOnInit(): void {
@@ -141,8 +143,49 @@ export class CotizacionesComponent implements OnInit {
 
   }
 
-  eliminar(id: any) {
+  searchCotizacion() {
+    console.log(this.search);
+    this.serviceCotizacion.search(this.search).then(data => {
+      console.log(data);
+      if (!data.success) {
+        this.showAlert(data.success, data.message);
+        return;
+      }
 
+      this.cotizaciones = data;
+
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    });
+  }
+
+  eliminar(id: any) {
+    Swal.fire({
+      title: '¿Eliminar?',
+      text: "¿Está seguro de eliminar esta cotización?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, estoy seguro.'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.onDelete(id);
+      }
+    })
+  }
+
+  onDelete(id: number) {
+    this.serviceCotizacion.delete(id).then(data => {
+      if (data.success) {
+        this.showAlert(data.success, data.message);
+        this.getAll();
+      } else {
+        this.showAlert(data.success, data.message);
+      }
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    })
   }
 
   modificar(id: any) {
@@ -188,14 +231,14 @@ export class CotizacionesComponent implements OnInit {
 
     if (success) {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'success',
         title: message,
         showConfirmButton: true
       })
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'error',
         title: message,
         showConfirmButton: true

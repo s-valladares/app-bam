@@ -28,10 +28,28 @@ export class CotizacionesService {
       })).toPromise();
   }
 
+  async search(dato: string) {
+    return await this.httpClient.get(this.url + this.recurso + '/search/' + dato, {
+      headers: getHeaders()
+    }).pipe(
+      map((data: any) => {
+        return data;
+      })).toPromise();
+  }
+
 
   async new(cotizacion: ICotizacion) {
     const lDatos = JSON.stringify(cotizacion);
     return await this.httpClient.post(this.url + this.recurso, lDatos, {
+      headers: getHeaders()
+    }).pipe(
+      map((data: any) => {
+        return data;
+      })).toPromise();
+  }
+
+  async delete(id: number) {
+    return await this.httpClient.delete(this.url + this.recurso + '/' + id, {
       headers: getHeaders()
     }).pipe(
       map((data: any) => {
