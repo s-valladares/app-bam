@@ -57,4 +57,13 @@ export class CotizacionesService {
       })).toPromise();
   }
 
+  async getId(id: number) {
+    return await this.httpClient.get(this.url + this.recurso + '/' + id, {
+      headers: getHeaders()
+    }).pipe(
+      map((data: any) => {
+        return data;
+      })).toPromise();
+  }
+
 }

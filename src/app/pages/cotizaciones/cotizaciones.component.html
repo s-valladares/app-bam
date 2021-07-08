@@ -51,7 +51,7 @@
                                     <th scope="col">Fecha</th>
                                     <th scope="col">Cliente</th>
                                     <th scope="col">Vehículo</th>
-                                    <th scope="col" class="text-center">Eliminar</th>
+                                    <th colspan="2" class="text-center">Acción</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,6 +64,13 @@
                                     <td class="text-center">
                                         <a href="javascript:void(0)" (click)="eliminar(item.id)" class="text-muted">
                                             <i title="Eliminar" class="fa fa-trash">X</i>
+                                        </a>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <a href="javascript:void(0)" (click)="verCotizacion(content, item.id)"
+                                            class="text-muted">
+                                            <i title="Ver información" class="fa fa-trash">V</i>
                                         </a>
                                     </td>
                                 </tr>
@@ -241,6 +248,51 @@
 
 
                         </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div *ngIf="modalCotizarDetalle">
+        <div class="modal-body">
+
+            <div class="card" style="width: 100%;">
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col">
+                            <p class="card-text"> <b>Fecha de cotización: </b> {{cotizacionId.createdAt |
+                                date:'dd/MM/yy'}}</p>
+                            <p class="card-text"><b>Cliente: </b> {{cotizacionId.nombres}} {{cotizacionId.apellidos}}
+                            </p>
+
+                            <p class="card-text"><b>Vehículo: </b> {{cotizacionId.marca}} {{cotizacionId.linea}}
+                                {{cotizacionId.modelo}} {{cotizacionId.color}}
+                            </p>
+                            <p class="card-text"><b>Precio de unidad: </b> {{cotizacionId.precio}}
+                            </p>
+
+                            <p class="card-text"><b>Cantidad cotizada: </b> {{cotizacionId.cantidad}}
+                            </p>
+
+                            <p class="card-text"><b>Total de cotización: </b> {{cotizacionId.total}}
+                            </p>
+
+                            <p class="card-text"><b>Tienda: </b> {{cotizacionId.concesionario}}
+                            </p>
+
+                            <p class="card-text"><b>Agente que le atendió: </b> {{cotizacionId.agente}}
+                            </p>
+                        </div>
+
+
                     </div>
 
 

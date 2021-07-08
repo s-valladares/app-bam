@@ -23,6 +23,7 @@ export class CotizacionesComponent implements OnInit {
 
   cotizaciones: ICotizaciones[];
   cotizacion: ICotizacion
+  cotizacionId: any;
   vehiculos: IVehiculos[];
   vehiculo: IVehiculos;
   clientes: IClientes[];
@@ -34,6 +35,7 @@ export class CotizacionesComponent implements OnInit {
   today: any;
   titleModal: string;
   modalCotizar: boolean;
+  modalCotizarDetalle: boolean;
   modalRef: any;
   totalCotizacion: number;
   search: string;
@@ -56,6 +58,7 @@ export class CotizacionesComponent implements OnInit {
     this.today = Date.now();
     this.titleModal = 'title';
     this.modalCotizar = false;
+    this.modalCotizarDetalle = false;
     this.vehiculo = Vehiculos.empty();
     this.clientes = [];
     this.concesionarios = []
@@ -63,6 +66,7 @@ export class CotizacionesComponent implements OnInit {
     this.mForma = this.generarFormulario();
     this.totalCotizacion = 0;
     this.search = '';
+    this.cotizacionId = {};
   }
 
   ngOnInit(): void {
@@ -134,6 +138,7 @@ export class CotizacionesComponent implements OnInit {
   ver(content: any, vehiculo: any) {
 
     this.vehiculo = vehiculo;
+    this.modalCotizarDetalle = true
     this.modalCotizar = true;
     this.titleModal = 'Cotizar vehículos';
     this.modalRef = this.modalService.open(content, { size: 'lg' });
@@ -141,6 +146,26 @@ export class CotizacionesComponent implements OnInit {
 
   nuevo() {
 
+  }
+
+  verCotizacion(content: any, id: any) {
+
+    this.modalCotizar = false;
+    this.modalCotizarDetalle = true
+    this.titleModal = 'Detalle de cotización';
+    this.modalRef = this.modalService.open(content, { size: 'lg' });
+
+    this.getCotizacionById(id);
+  }
+
+  getCotizacionById(id: number) {
+    this.serviceCotizacion.getId(id).then(data => {
+
+      this.cotizacionId = data[0];
+      console.log(this.cotizacionId);
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    })
   }
 
   searchCotizacion() {
@@ -191,6 +216,7 @@ export class CotizacionesComponent implements OnInit {
   modificar(id: any) {
 
   }
+
 
   generarFormulario() {
     return this.FormBuil.group({
