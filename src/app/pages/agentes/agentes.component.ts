@@ -5,6 +5,7 @@ import { Agente, IAgentes } from 'src/app/services/agentes/agentes';
 import { AgentesService } from 'src/app/services/agentes/agentes.service';
 import { IConcesionarios } from 'src/app/services/concesionarios/concesionario';
 import { ConcesionariosService } from 'src/app/services/concesionarios/concesionarios.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-agentes',
@@ -45,8 +46,7 @@ export class AgentesComponent implements OnInit {
       console.log(this.agentes);
       this.loading = false;
     }).catch(error => {
-      this.toast.error('Ocurrió un error al obtener los agentes');
-      this.loading = false;
+      this.showAlert(false, error.message)
     });
   }
 
@@ -57,8 +57,7 @@ export class AgentesComponent implements OnInit {
       console.log(this.concesionarios);
       this.loading = false;
     }).catch(error => {
-      this.toast.error('Ocurrió un error al obtener los concesioanrios');
-      this.loading = false;
+      this.showAlert(false, error.message)
     });
   }
 
@@ -91,20 +90,43 @@ export class AgentesComponent implements OnInit {
 
   insertarAgente() {
     this.serviceAgente.new(this.agente).then(data => {
-      this.mForma.reset();
-      this.agentes.push(this.agente);
-      this.toast.success(data.message);
-      alert(data.message);
       console.log(data);
+      this.showAlert(data.success, data.message);
+
+      if (data.success) {
+        this.mForma.reset();
+        this.agentes.push(this.agente);
+      }
+
     }).catch(error => {
-      this.toast.success(error.message);
+      console.log(error);
+      this.showAlert(false, error.message)
     });
   }
 
   onSubmit() {
     this.agente = this.mForma.value as IAgentes;
-    console.log(this.agente);
     this.insertarAgente();
+  }
+
+
+  showAlert(success: boolean, message: string) {
+
+    if (success) {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: message,
+        showConfirmButton: true
+      })
+    } else {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: message,
+        showConfirmButton: true
+      })
+    }
   }
 
 

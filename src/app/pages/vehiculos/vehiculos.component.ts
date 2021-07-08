@@ -5,6 +5,7 @@ import { IConcesionarios } from 'src/app/services/concesionarios/concesionario';
 import { ConcesionariosService } from 'src/app/services/concesionarios/concesionarios.service';
 import { IVehiculos, Vehiculos } from 'src/app/services/vehiculos/vehiculos';
 import { VehiculosService } from 'src/app/services/vehiculos/vehiculos.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-vehiculos',
@@ -57,8 +58,7 @@ export class VehiculosComponent implements OnInit {
       console.log(this.vehiculos);
       this.loading = false;
     }).catch(error => {
-      this.toast.error('Ocurrió un error al obtener los vehículos');
-      this.loading = false;
+      this.showAlert(false, error.message)
     });
   }
 
@@ -76,13 +76,16 @@ export class VehiculosComponent implements OnInit {
 
   insertarVehiculo() {
     this.serviceVehiculo.new(this.vehiculo).then(data => {
-      this.mForma.reset();
-      this.vehiculos.push(this.vehiculo);
-      this.toast.success(data.message);
-      alert(data.message);
+      this.showAlert(data.success, data.message);
+
+      if (data.success) {
+        this.mForma.reset();
+        this.vehiculos.push(this.vehiculo);
+      }
+
       console.log(data);
     }).catch(error => {
-      this.toast.success(error.message);
+      this.showAlert(false, error.message)
     });
   }
 
@@ -108,8 +111,12 @@ export class VehiculosComponent implements OnInit {
       { nombre: '3' },
       { nombre: '6' },
       { nombre: 'Yaris' },
+      { nombre: '22R' },
+      { nombre: 'Hilux' },
       { nombre: 'Civic' },
-      { nombre: 'Hilux' }
+      { nombre: 'Accord' },
+      { nombre: 'Pilot' },
+      { nombre: 'CRV' }
     ]
   }
 
@@ -163,6 +170,25 @@ export class VehiculosComponent implements OnInit {
     this.vehiculo = this.mForma.value as IVehiculos;
     console.log(this.vehiculo);
     this.insertarVehiculo();
+  }
+
+  showAlert(success: boolean, message: string) {
+
+    if (success) {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: message,
+        showConfirmButton: true
+      })
+    } else {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: message,
+        showConfirmButton: true
+      })
+    }
   }
 
 }

@@ -5,6 +5,7 @@ import { Cliente, IClientes } from 'src/app/services/clientes/clientes';
 import { ClientesService } from 'src/app/services/clientes/clientes.service';
 import { IConcesionarios } from 'src/app/services/concesionarios/concesionario';
 import { ConcesionariosService } from 'src/app/services/concesionarios/concesionarios.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-clientes',
@@ -95,13 +96,16 @@ export class ClientesComponent implements OnInit {
 
   insertarCliente() {
     this.serviceClientes.new(this.cliente).then(data => {
-      this.mForma.reset();
-      this.clientes.push(this.cliente);
-      this.toast.success(data.message);
-      alert(data.message);
+      this.showAlert(data.success, data.message);
+
+      if (data.success) {
+        this.mForma.reset();
+        this.clientes.push(this.cliente);
+      }
+
       console.log(data);
     }).catch(error => {
-      this.toast.success(error.message);
+      this.showAlert(false, error.message)
     });
   }
 
@@ -109,6 +113,25 @@ export class ClientesComponent implements OnInit {
     this.cliente = this.mForma.value as IClientes;
     console.log(this.cliente);
     this.insertarCliente();
+  }
+
+  showAlert(success: boolean, message: string) {
+
+    if (success) {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: message,
+        showConfirmButton: true
+      })
+    } else {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: message,
+        showConfirmButton: true
+      })
+    }
   }
 
 }

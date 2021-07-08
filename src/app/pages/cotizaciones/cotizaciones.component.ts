@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { IConcesionarios } from 'src/app/services/concesionarios/concesionario';
 import { Cotizaciones, ICotizaciones } from 'src/app/services/cotizaciones/cotizaciones';
 import { CotizacionesService } from 'src/app/services/cotizaciones/cotizaciones.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-cotizaciones',
@@ -90,6 +91,25 @@ export class CotizacionesComponent implements OnInit {
     this.concesionario = this.mForma.value as IConcesionarios;
     console.log(this.concesionario);
     this.insertarAgente();*/
+  }
+
+  showAlert(success: boolean, message: string) {
+
+    if (success) {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: message,
+        showConfirmButton: true
+      })
+    } else {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: message,
+        showConfirmButton: true
+      })
+    }
   }
 
 

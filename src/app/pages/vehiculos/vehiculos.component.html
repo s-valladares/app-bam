@@ -137,7 +137,7 @@
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
                                 formControlName="concesionarioId">
 
-                                <option [value]="item.nombre" *ngFor="let item of concesionarios">{{item.nombre}}
+                                <option [value]="item.id" *ngFor="let item of concesionarios">{{item.nombre}}
                                 </option>
                             </select>
                             <label for="floatingSelect">Concesionario</label>
@@ -204,6 +204,7 @@
                         <th scope="col">Color</th>
                         <th scope="col">Modelo</th>
                         <th scope="col">Precio</th>
+                        <th scope="col">Disponibles</th>
                         <th colspan="3" class="text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -215,6 +216,7 @@
                         <td>{{item.color }}</td>
                         <td>{{item.modelo}}</td>
                         <td>{{item.precio}}</td>
+                        <td>{{item.cantidad}}</td>
                         <td>
                             <a href="javascript:void(0)" (click)="ver(item.id)" class="text-muted">
                                 <i title="Ver información" class="fa fa-eye">V</i>
