@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { IConcesionarios } from 'src/app/services/concesionarios/concesionario';
+import { ConcesionariosService } from 'src/app/services/concesionarios/concesionarios.service';
 import { IVehiculos, Vehiculos } from 'src/app/services/vehiculos/vehiculos';
 import { VehiculosService } from 'src/app/services/vehiculos/vehiculos.service';
 
@@ -13,6 +15,7 @@ export class VehiculosComponent implements OnInit {
 
   vehiculos: IVehiculos[];
   vehiculo: IVehiculos;
+  concesionarios: IConcesionarios[];
   loading: boolean;
   lineas: any[];
   colores: any[];
@@ -25,11 +28,13 @@ export class VehiculosComponent implements OnInit {
     private serviceVehiculo: VehiculosService,
     private toast: ToastrService,
     private FormBuil: FormBuilder,
+    private serviceConcesionarios: ConcesionariosService
   ) {
     this.vehiculos = [];
     this.vehiculo = Vehiculos.empty();
     this.loading = false;
     this.lineas = [];
+    this.concesionarios = [];
     this.colores = []
     this.marcas = [];
     this.tipos = [];
@@ -38,6 +43,7 @@ export class VehiculosComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
+    this.getAllConcesionarios();
     this.getLineas();
     this.getColores();
     this.getMarcas();
@@ -52,6 +58,18 @@ export class VehiculosComponent implements OnInit {
       this.loading = false;
     }).catch(error => {
       this.toast.error('Ocurrió un error al obtener los vehículos');
+      this.loading = false;
+    });
+  }
+
+  getAllConcesionarios() {
+    this.loading = true;
+    this.serviceConcesionarios.getAll().then(data => {
+      this.concesionarios = data;
+      console.log(this.concesionarios);
+      this.loading = false;
+    }).catch(error => {
+      this.toast.error('Ocurrió un error al obtener los concesioanrios');
       this.loading = false;
     });
   }

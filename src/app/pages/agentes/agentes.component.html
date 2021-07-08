@@ -71,10 +71,8 @@
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
                                 formControlName="concesionarioId">
 
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="3">4</option>
+                                <option [value]="item.nombre" *ngFor="let item of concesionarios">{{item.nombre}}
+                                </option>
                             </select>
                             <label for="floatingSelect">Concesionario</label>
                         </div>

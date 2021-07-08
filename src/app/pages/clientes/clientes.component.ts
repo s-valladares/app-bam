@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Cliente, IClientes } from 'src/app/services/clientes/clientes';
 import { ClientesService } from 'src/app/services/clientes/clientes.service';
+import { IConcesionarios } from 'src/app/services/concesionarios/concesionario';
+import { ConcesionariosService } from 'src/app/services/concesionarios/concesionarios.service';
 
 @Component({
   selector: 'app-clientes',
@@ -13,6 +15,7 @@ export class ClientesComponent implements OnInit {
 
   clientes: IClientes[];
   cliente: IClientes;
+  concesionarios: IConcesionarios[];
   loading: boolean;
   submitted = false;
   mForma: FormGroup;
@@ -21,15 +24,18 @@ export class ClientesComponent implements OnInit {
     private serviceClientes: ClientesService,
     private toast: ToastrService,
     private FormBuil: FormBuilder,
+    private serviceConcesionarios: ConcesionariosService
   ) {
     this.loading = false;
     this.cliente = Cliente.empty();
     this.clientes = [];
+    this.concesionarios = [];
     this.mForma = this.generarFormulario();
   }
 
   ngOnInit(): void {
     this.getAll();
+    this.getAllConcesionarios();
   }
 
   getAll() {
@@ -43,6 +49,19 @@ export class ClientesComponent implements OnInit {
       this.loading = false;
     });
   }
+
+  getAllConcesionarios() {
+    this.loading = true;
+    this.serviceConcesionarios.getAll().then(data => {
+      this.concesionarios = data;
+      console.log(this.concesionarios);
+      this.loading = false;
+    }).catch(error => {
+      this.toast.error('Ocurrió un error al obtener los concesionarios');
+      this.loading = false;
+    });
+  }
+
 
   ver(id: any) {
 
