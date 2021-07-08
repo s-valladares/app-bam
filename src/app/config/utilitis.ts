@@ -4,4 +4,5 @@ export abstract class Urls {
     static readonly CLIENTES: string = 'clientes'
     static readonly AGENTES: string = 'agentes'
     static readonly CONCESIONARIOS: string = 'concesionario'
+    static readonly COTIZACIONES: string = 'cotizaciones'
 }

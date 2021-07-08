@@ -1,1 +1,82 @@
-<p>cotizaciones works!</p>
+<div class="mt-5 px-5">
+
+    <div class="row space-card">
+
+        <div class="col">
+
+            <div class="card" style="height: 45rem;">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Buscar cotización"
+                        aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">Buscar</span>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title">Cotizaciones realizadas</h5>
+                    <p class="card-text">Estas son las cotizaciones realizadas a la fecha, puede buscar sino aparece.
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col">
+            <div class="card space-card">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Buscar vehículo para cotizar"
+                        aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">Buscar</span>
+                    </div>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <p class="card-text">Escriba la marca, línea o modelo de vehículo para cotizar</p>
+                    <h5 class="card-title">Listado de vehículos</h5>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Marca</th>
+                                <th scope="col">Línea</th>
+                                <th scope="col">Modelo</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col" class="text-center">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of cotizaciones; let i = index">
+                                <th scope="row">{{i+1}}</th>
+                                <td>{{item.createdAt}}</td>
+                                <td>{{item.marca }}</td>
+                                <td>{{item.linea }}</td>
+                                <td>{{item.modelo }}</td>
+                                <td>{{item.precio }}</td>
+
+                                <td class="text-center">
+                                    <a href="javascript:void(0)" (click)="eliminar( item.id)" class="text-muted">
+                                        <i title="Eliminar" class="fa fa-trash">X</i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <a href="#" class="btn btn-outline-primary mt-auto">Cotizar</a>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
