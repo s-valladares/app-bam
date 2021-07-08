@@ -40,34 +40,33 @@ export class VehiculosService {
       })).toPromise();
   }
 
-  /* 
-   
-     async getById(pKey: any) {
-       return await this.httpClient.get(this.mUrl + this.mService + '/' + pKey, {
-         headers: getHeaders()
-       }).pipe(
-         map((data: any) => {
-           return data;
-         })).toPromise();
-     }
-   
-   
-     async update(pObj: any, pKey: number) {
-       const jObj = JSON.stringify(pObj);
-       return await this.httpClient.put(this.mUrl + this.mService + '/' + pKey, jObj,
-         { headers: getHeaders() })
-         // tslint:disable-next-line: arrow-return-shorthand
-         .pipe(map((data: any) => { return data; }))
-         .toPromise();
-     }
-   
-   
-     async delete(pKey: number) {
-       return await this.httpClient.delete(this.mUrl + this.mService + '/' + pKey,
-         { headers: getHeaders() }).pipe(
-           map((data: any) => {
-             return data;
-           })).toPromise();
-     }
-   */
+
+
+  async getById(id: any) {
+    return await this.httpClient.get(this.url + this.recurso + '/' + id, {
+      headers: getHeaders()
+    }).pipe(
+      map((data: any) => {
+        return data;
+      })).toPromise();
+  }
+
+
+  async update(vehiculo: any, id: number) {
+    const v = JSON.stringify(vehiculo);
+    return await this.httpClient.put(this.url + this.recurso + '/' + id, v,
+      { headers: getHeaders() })
+      .pipe(map((data: any) => { return data; }))
+      .toPromise();
+  }
+
+  /*     
+       async delete(pKey: number) {
+         return await this.httpClient.delete(this.mUrl + this.mService + '/' + pKey,
+           { headers: getHeaders() }).pipe(
+             map((data: any) => {
+               return data;
+             })).toPromise();
+       }
+     */
 }

@@ -174,7 +174,12 @@
                 </div>
 
                 <div class="d-flex justify-content-center">
-                    <button type=" button" class="btn btn-outline-primary" (click)="onSubmit()">Guardar</button>
+                    <button *ngIf="tipoForm == ''" type=" button" class="btn btn-outline-primary"
+                        (click)="onSubmit()">Guardar</button>
+                    <button *ngIf="tipoForm == 'actualizar'" type=" button" class="btn btn-outline-primary"
+                        (click)="onSubmit()">Actualizar</button>
+                    <button type=" button" class="btn btn-outline-primary ml-2" (click)="limpiarCampos()">Limpiar
+                        campos</button>
                 </div>
 
 

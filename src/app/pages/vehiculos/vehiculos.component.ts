@@ -24,6 +24,7 @@ export class VehiculosComponent implements OnInit {
   tipos: any[];
   submitted = false;
   mForma: FormGroup;
+  tipoForm: string;
 
 
   constructor(
@@ -41,7 +42,7 @@ export class VehiculosComponent implements OnInit {
     this.marcas = [];
     this.tipos = [];
     this.mForma = this.generarFormulario();
-
+    this.tipoForm = '';
   }
 
   ngOnInit(): void {
@@ -91,7 +92,24 @@ export class VehiculosComponent implements OnInit {
     });
   }
 
+
+  actualizarVehiculo(id: any) {
+    this.serviceVehiculo.update(this.vehiculo, id).then(data => {
+      this.showAlert(data.success, data.message);
+
+      if (data.success) {
+        this.mForma.reset();
+        this.getAll();
+      }
+
+      console.log(data);
+    }).catch(error => {
+      this.showAlert(false, error.message)
+    });
+  }
+
   ver(id: any) {
+
 
   }
 
@@ -103,8 +121,36 @@ export class VehiculosComponent implements OnInit {
 
   }
 
-  modificar(id: any) {
+  limpiarCampos() {
+    this.mForma.reset();
+  }
 
+  modificar(id: any) {
+    this.tipoForm = 'actualizar'
+    this.serviceVehiculo.getById(id).then(data => {
+      this.vehiculo = data[0];
+      console.log(this.vehiculo);
+
+      this.mForma.setValue({
+        marca: this.vehiculo.marca,
+        linea: this.vehiculo.linea,
+        color: this.vehiculo.color,
+        modelo: this.vehiculo.modelo,
+        tipo: this.vehiculo.tipo,
+        formaPago: this.vehiculo.formaPago,
+        numeroPagos: this.vehiculo.numeroPagos,
+        cc: this.vehiculo.cc,
+        v: this.vehiculo.v,
+        concesionarioId: this.vehiculo.concesionarioId,
+        costo: this.vehiculo.costo,
+        precio: this.vehiculo.precio,
+        cantidad: this.vehiculo.cantidad
+
+      });
+
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    });
   }
 
   getLineas() {
@@ -169,9 +215,18 @@ export class VehiculosComponent implements OnInit {
   }
 
   onSubmit() {
+    let idTemp = this.vehiculo.id;
     this.vehiculo = this.mForma.value as IVehiculos;
+    this.vehiculo.id = idTemp;
     console.log(this.vehiculo);
-    this.insertarVehiculo();
+
+    if (this.tipoForm == 'actualizar') {
+      this.actualizarVehiculo(idTemp);
+    } else {
+      this.insertarVehiculo();
+    }
+
+
   }
 
   showAlert(success: boolean, message: string) {
