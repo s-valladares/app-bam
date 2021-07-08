@@ -12,7 +12,6 @@ import Swal from 'sweetalert2'
 })
 export class ConcesionarioComponent implements OnInit {
 
-
   concesionarios: IConcesionarios[];
   concesionario: IConcesionarios;
   loading: boolean;
@@ -28,6 +27,7 @@ export class ConcesionarioComponent implements OnInit {
     this.concesionario = Concesionario.empty();
     this.concesionarios = [];
     this.mForma = this.generarFormulario();
+
   }
 
   ngOnInit(): void {

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { getHeaders } from 'src/app/config/headers';
 import { Urls } from 'src/app/config/utilitis';
+import { ICotizacion } from './cotizaciones';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +28,15 @@ export class CotizacionesService {
       })).toPromise();
   }
 
-  /*
-    async new(concesionario: IConcesionarios) {
-      const lDatos = JSON.stringify(concesionario);
-      return await this.httpClient.post(this.url + this.recurso, lDatos, {
-        headers: getHeaders()
-      }).pipe(
-        map((data: any) => {
-          return data;
-        })).toPromise();
-    }
-  */
+
+  async new(cotizacion: ICotizacion) {
+    const lDatos = JSON.stringify(cotizacion);
+    return await this.httpClient.post(this.url + this.recurso, lDatos, {
+      headers: getHeaders()
+    }).pipe(
+      map((data: any) => {
+        return data;
+      })).toPromise();
+  }
+
 }

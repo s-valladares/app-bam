@@ -25,6 +25,7 @@ export class VehiculosComponent implements OnInit {
   submitted = false;
   mForma: FormGroup;
 
+
   constructor(
     private serviceVehiculo: VehiculosService,
     private toast: ToastrService,
@@ -40,6 +41,7 @@ export class VehiculosComponent implements OnInit {
     this.marcas = [];
     this.tipos = [];
     this.mForma = this.generarFormulario();
+
   }
 
   ngOnInit(): void {

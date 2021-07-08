@@ -215,7 +215,7 @@
                         <td>{{item.linea }}</td>
                         <td>{{item.color }}</td>
                         <td>{{item.modelo}}</td>
-                        <td>{{item.precio}}</td>
+                        <td>Q{{item.precio | number:'1.2-2'}}</td>
                         <td>{{item.cantidad}}</td>
                         <td>
                             <a href="javascript:void(0)" (click)="ver(item.id)" class="text-muted">
