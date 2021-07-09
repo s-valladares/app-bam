@@ -8,6 +8,7 @@ export interface IClientes {
     estadoCivil: string;
     nivelAcademico: string;
     profesion: string;
+    tienda: string;
     concesionarioId: number;
     createdAt: Date;
 }
@@ -25,6 +26,7 @@ export class Cliente {
             nivelAcademico: '',
             profesion: '',
             concesionarioId: 0,
+            tienda: '',
             createdAt: new Date()
         } as IClientes
     }

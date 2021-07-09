@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Cliente, IClientes } from 'src/app/services/clientes/clientes';
 import { ClientesService } from 'src/app/services/clientes/clientes.service';
@@ -20,18 +21,26 @@ export class ClientesComponent implements OnInit {
   loading: boolean;
   submitted = false;
   mForma: FormGroup;
+  tipoForm: string;
+  modalDetalle: boolean;
+  titleModal: string;
+  modalRef: any;
 
   constructor(
     private serviceClientes: ClientesService,
     private toast: ToastrService,
     private FormBuil: FormBuilder,
-    private serviceConcesionarios: ConcesionariosService
+    private serviceConcesionarios: ConcesionariosService,
+    private modalService: NgbModal
   ) {
     this.loading = false;
     this.cliente = Cliente.empty();
     this.clientes = [];
     this.concesionarios = [];
     this.mForma = this.generarFormulario();
+    this.tipoForm = '';
+    this.modalDetalle = false;
+    this.titleModal = '';
   }
 
   ngOnInit(): void {
@@ -64,8 +73,19 @@ export class ClientesComponent implements OnInit {
   }
 
 
-  ver(id: any) {
+  ver(content: any, id: any) {
 
+    this.modalDetalle = true
+    this.titleModal = 'Detalle de cliente';
+    this.modalRef = this.modalService.open(content, { size: 'lg' });
+
+    this.serviceClientes.getById(id).then(data => {
+      this.cliente = data[0];
+      console.log(this.cliente);
+
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    });
   }
 
   nuevo() {
@@ -73,11 +93,70 @@ export class ClientesComponent implements OnInit {
   }
 
   eliminar(id: any) {
+    Swal.fire({
+      title: '¿Eliminar?',
+      text: "¿Está seguro de eliminar esta cotización?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, estoy seguro.'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.onDelete(id);
+      }
+    })
+  }
 
+  onDelete(id: number) {
+    this.serviceClientes.delete(id).then(data => {
+      if (data.success) {
+        this.showAlert(data.success, data.message);
+        this.getAll();
+      } else {
+        this.showAlert(data.success, data.message);
+      }
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    })
+  }
+
+  actualizarCliente(id: any) {
+    this.serviceClientes.update(this.cliente, id).then(data => {
+      this.showAlert(data.success, data.message);
+
+      if (data.success) {
+        this.mForma.reset();
+        this.getAll();
+      }
+
+      console.log(data);
+    }).catch(error => {
+      this.showAlert(false, error.message)
+    });
   }
 
   modificar(id: any) {
+    this.tipoForm = 'actualizar'
+    this.serviceClientes.getById(id).then(data => {
+      this.cliente = data[0];
+      console.log(this.cliente);
 
+      this.mForma.setValue({
+        nombres: this.cliente.nombres,
+        apellidos: this.cliente.apellidos,
+        direccion: this.cliente.direccion,
+        telefono: this.cliente.telefono,
+        email: this.cliente.email,
+        nivelAcademico: this.cliente.nivelAcademico,
+        profesion: this.cliente.profesion,
+        concesionarioId: this.cliente.concesionarioId,
+
+      });
+
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    });
   }
 
   generarFormulario() {
@@ -87,7 +166,6 @@ export class ClientesComponent implements OnInit {
       direccion: [''],
       telefono: [''],
       email: [''],
-      estadoCivil: [''],
       nivelAcademico: [''],
       profesion: [''],
       concesionarioId: ['']
@@ -110,23 +188,33 @@ export class ClientesComponent implements OnInit {
   }
 
   onSubmit() {
+    let idTemp = this.cliente.id;
     this.cliente = this.mForma.value as IClientes;
     console.log(this.cliente);
-    this.insertarCliente();
+
+    if (this.tipoForm == 'actualizar') {
+      this.actualizarCliente(idTemp);
+    } else {
+      this.insertarCliente();
+    }
+  }
+
+  limpiarCampos() {
+    this.mForma.reset();
   }
 
   showAlert(success: boolean, message: string) {
 
     if (success) {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'success',
         title: message,
         showConfirmButton: true
       })
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'error',
         title: message,
         showConfirmButton: true

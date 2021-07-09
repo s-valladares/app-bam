@@ -138,7 +138,7 @@ export class CotizacionesComponent implements OnInit {
   ver(content: any, vehiculo: any) {
 
     this.vehiculo = vehiculo;
-    this.modalCotizarDetalle = true
+    this.modalCotizarDetalle = false
     this.modalCotizar = true;
     this.titleModal = 'Cotizar vehículos';
     this.modalRef = this.modalService.open(content, { size: 'lg' });

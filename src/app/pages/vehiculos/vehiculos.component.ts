@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { IConcesionarios } from 'src/app/services/concesionarios/concesionario';
 import { ConcesionariosService } from 'src/app/services/concesionarios/concesionarios.service';
@@ -25,13 +26,16 @@ export class VehiculosComponent implements OnInit {
   submitted = false;
   mForma: FormGroup;
   tipoForm: string;
-
+  modalDetalle: boolean;
+  titleModal: string;
+  modalRef: any;
 
   constructor(
     private serviceVehiculo: VehiculosService,
     private toast: ToastrService,
     private FormBuil: FormBuilder,
-    private serviceConcesionarios: ConcesionariosService
+    private serviceConcesionarios: ConcesionariosService,
+    private modalService: NgbModal
   ) {
     this.vehiculos = [];
     this.vehiculo = Vehiculos.empty();
@@ -43,6 +47,8 @@ export class VehiculosComponent implements OnInit {
     this.tipos = [];
     this.mForma = this.generarFormulario();
     this.tipoForm = '';
+    this.modalDetalle = false;
+    this.titleModal = '';
   }
 
   ngOnInit(): void {
@@ -108,9 +114,19 @@ export class VehiculosComponent implements OnInit {
     });
   }
 
-  ver(id: any) {
+  ver(content: any, id: any) {
 
+    this.modalDetalle = true
+    this.titleModal = 'Detalle de vehículo';
+    this.modalRef = this.modalService.open(content, { size: 'lg' });
 
+    this.serviceVehiculo.getById(id).then(data => {
+      this.vehiculo = data[0];
+      console.log(this.vehiculo);
+
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    });
   }
 
   nuevo() {
