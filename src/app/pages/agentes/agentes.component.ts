@@ -85,10 +85,6 @@ export class AgentesComponent implements OnInit {
     });
   }
 
-  nuevo() {
-
-  }
-
   eliminar(id: any) {
     console.log(id);
     Swal.fire({

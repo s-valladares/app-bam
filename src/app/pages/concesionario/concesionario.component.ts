@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Concesionario, IConcesionarios } from 'src/app/services/concesionarios/concesionario';
 import { ConcesionariosService } from 'src/app/services/concesionarios/concesionarios.service';
@@ -17,16 +18,24 @@ export class ConcesionarioComponent implements OnInit {
   loading: boolean;
   submitted = false;
   mForma: FormGroup;
+  tipoForm: string;
+  modalDetalle: boolean;
+  titleModal: string;
+  modalRef: any;
 
   constructor(
     private serviceConcesionario: ConcesionariosService,
     private toast: ToastrService,
     private FormBuil: FormBuilder,
+    private modalService: NgbModal
   ) {
     this.loading = false;
     this.concesionario = Concesionario.empty();
     this.concesionarios = [];
     this.mForma = this.generarFormulario();
+    this.tipoForm = '';
+    this.modalDetalle = false;
+    this.titleModal = '';
 
   }
 
@@ -51,20 +60,85 @@ export class ConcesionarioComponent implements OnInit {
     });
   }
 
-  ver(id: any) {
+  ver(content: any, id: any) {
 
-  }
+    this.modalDetalle = true
+    this.titleModal = 'Detalle del concensionario';
+    this.modalRef = this.modalService.open(content, { size: 'lg' });
 
-  nuevo() {
+    this.serviceConcesionario.getById(id).then(data => {
+      this.concesionario = data[0];
+      console.log(this.concesionario);
 
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    });
   }
 
   eliminar(id: any) {
+    console.log(id);
+    Swal.fire({
+      title: '¿Eliminar?',
+      text: "¿Está seguro de eliminar esta cotización?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, estoy seguro.'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.onDelete(id);
+      }
+    })
+  }
 
+  onDelete(id: number) {
+    this.serviceConcesionario.delete(id).then(data => {
+      if (data.success) {
+        this.showAlert(data.success, data.message);
+        this.getAll();
+      } else {
+        this.showAlert(data.success, data.message);
+      }
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    })
+  }
+
+  actualizarConcesionario(id: any) {
+    this.serviceConcesionario.update(this.concesionario, id).then(data => {
+      this.showAlert(data.success, data.message);
+
+      if (data.success) {
+        this.mForma.reset();
+        this.getAll();
+      }
+
+      console.log(data);
+    }).catch(error => {
+      this.showAlert(false, error.message)
+    });
   }
 
   modificar(id: any) {
+    this.tipoForm = 'actualizar'
+    this.serviceConcesionario.getById(id).then(data => {
+      this.concesionario = data[0];
+      console.log(this.concesionario);
 
+      this.mForma.setValue({
+        nombre: this.concesionario.nombre,
+        razon: this.concesionario.razon,
+        email: this.concesionario.email,
+        telefono: this.concesionario.telefono,
+        departamento: this.concesionario.departamento,
+        municipio: this.concesionario.municipio,
+
+      });
+
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    });
   }
 
   generarFormulario() {
@@ -78,7 +152,7 @@ export class ConcesionarioComponent implements OnInit {
     });
   }
 
-  insertarAgente() {
+  insertarConcesionario() {
     this.serviceConcesionario.new(this.concesionario).then(data => {
       this.showAlert(data.success, data.message);
 
@@ -94,9 +168,19 @@ export class ConcesionarioComponent implements OnInit {
   }
 
   onSubmit() {
+    let idTemp = this.concesionario.id;
     this.concesionario = this.mForma.value as IConcesionarios;
     console.log(this.concesionario);
-    this.insertarAgente();
+
+    if (this.tipoForm == 'actualizar') {
+      this.actualizarConcesionario(idTemp);
+    } else {
+      this.insertarConcesionario();
+    }
+  }
+
+  limpiarCampos() {
+    this.mForma.reset();
   }
 
   showAlert(success: boolean, message: string) {

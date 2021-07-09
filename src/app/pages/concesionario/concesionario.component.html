@@ -76,7 +76,12 @@
 
 
                 <div class="d-flex justify-content-center">
-                    <button type=" button" class="btn btn-outline-primary" (click)="onSubmit()">Guardar</button>
+                    <button *ngIf="tipoForm == ''" type=" button" class="btn btn-outline-primary"
+                        (click)="onSubmit()">Guardar</button>
+                    <button *ngIf="tipoForm == 'actualizar'" type=" button" class="btn btn-outline-primary"
+                        (click)="onSubmit()">Actualizar</button>
+                    <button type=" button" class="btn btn-outline-primary ml-2" (click)="limpiarCampos()">Limpiar
+                        campos</button>
                 </div>
 
 
@@ -115,7 +120,7 @@
                         <td>{{item.email }}</td>
                         <td>{{item.telefono }}</td>
                         <td>
-                            <a href="javascript:void(0)" (click)="ver(item.id)" class="text-muted">
+                            <a href="javascript:void(0)" (click)="ver(content, item.id)" class="text-muted">
                                 <i title="Ver información" class="fa fa-eye">V</i>
                             </a>
                         </td>
@@ -137,5 +142,43 @@
         </div>
     </div>
 
+    <ng-template #content let-modal #customLoadingTemplate>
 
+        <div class="modal-header">
+            <h5 class="modal-title" id="modal-basic-title">{{ titleModal }}</h5>
+            <button style="width: 50px; height: 50px;" type="button" class="close" aria-label="Close"
+                (click)="modal.dismiss()"></button>
+            <span aria-hidden="true">&times;</span>
+        </div>
+
+        <!--- DETALLE DEL CONCESIONARIO -->
+        <div *ngIf="modalDetalle">
+            <div class="modal-body">
+
+                <div class="card" style="width: 100%;">
+
+                    <div class="card-body">
+
+                        <div class="row">
+
+                            <div class="col">
+                                <h4 class="card-title">{{concesionario.nombre}}</h4>
+                                <p class="card-text"><b>Razón social: </b> {{concesionario.razon}}</p>
+                                <p class="card-text"><b>Correo electrónico: </b> {{concesionario.email}}</p>
+                                <p class="card-text"><b>Departamento: </b> {{concesionario.departamento}}</p>
+                                <p class="card-text"><b>Municipio: </b> {{concesionario.municipio}}</p>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </ng-template>
 </div>
