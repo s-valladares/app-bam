@@ -118,7 +118,32 @@ export class VehiculosComponent implements OnInit {
   }
 
   eliminar(id: any) {
+    Swal.fire({
+      title: '¿Eliminar?',
+      text: "¿Está seguro de eliminar esta cotización?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, estoy seguro.'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.onDelete(id);
+      }
+    })
+  }
 
+  onDelete(id: number) {
+    this.serviceVehiculo.delete(id).then(data => {
+      if (data.success) {
+        this.showAlert(data.success, data.message);
+        this.getAll();
+      } else {
+        this.showAlert(data.success, data.message);
+      }
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    })
   }
 
   limpiarCampos() {

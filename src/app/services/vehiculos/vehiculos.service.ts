@@ -60,13 +60,13 @@ export class VehiculosService {
       .toPromise();
   }
 
-  /*     
-       async delete(pKey: number) {
-         return await this.httpClient.delete(this.mUrl + this.mService + '/' + pKey,
-           { headers: getHeaders() }).pipe(
-             map((data: any) => {
-               return data;
-             })).toPromise();
-       }
-     */
+
+  async delete(id: number) {
+    return await this.httpClient.delete(this.url + this.recurso + '/' + id,
+      { headers: getHeaders() }).pipe(
+        map((data: any) => {
+          return data;
+        })).toPromise();
+  }
+
 }
