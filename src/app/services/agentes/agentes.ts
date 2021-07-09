@@ -5,7 +5,7 @@ export interface IAgentes {
     nacimiento: Date;
     direccion: string;
     telefono: string;
-
+    tienda: string;
     concesionarioId: number;
     createdAt: Date;
 }
@@ -18,6 +18,7 @@ export class Agente {
             apellidos: '',
             direccion: '',
             telefono: '',
+            tienda: '',
             concesionarioId: 0,
             createdAt: new Date()
         } as IAgentes

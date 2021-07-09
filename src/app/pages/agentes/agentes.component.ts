@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Agente, IAgentes } from 'src/app/services/agentes/agentes';
 import { AgentesService } from 'src/app/services/agentes/agentes.service';
@@ -20,18 +21,26 @@ export class AgentesComponent implements OnInit {
   loading: boolean;
   submitted = false;
   mForma: FormGroup;
+  tipoForm: string;
+  modalDetalle: boolean;
+  titleModal: string;
+  modalRef: any;
 
   constructor(
     private serviceAgente: AgentesService,
     private serviceConcesionarios: ConcesionariosService,
     private toast: ToastrService,
     private FormBuil: FormBuilder,
+    private modalService: NgbModal
   ) {
     this.loading = false;
     this.agente = Agente.empty();
     this.agentes = [];
     this.concesionarios = [];
     this.mForma = this.generarFormulario();
+    this.tipoForm = '';
+    this.modalDetalle = false;
+    this.titleModal = '';
   }
 
   ngOnInit(): void {
@@ -61,8 +70,19 @@ export class AgentesComponent implements OnInit {
     });
   }
 
-  ver(id: any) {
+  ver(content: any, id: any) {
 
+    this.modalDetalle = true
+    this.titleModal = 'Detalle de agente';
+    this.modalRef = this.modalService.open(content, { size: 'lg' });
+
+    this.serviceAgente.getById(id).then(data => {
+      this.agente = data[0];
+      console.log(this.agente);
+
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    });
   }
 
   nuevo() {
@@ -70,12 +90,72 @@ export class AgentesComponent implements OnInit {
   }
 
   eliminar(id: any) {
+    console.log(id);
+    Swal.fire({
+      title: '¿Eliminar?',
+      text: "¿Está seguro de eliminar esta cotización?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, estoy seguro.'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.onDelete(id);
+      }
+    })
+  }
 
+  onDelete(id: number) {
+    this.serviceAgente.delete(id).then(data => {
+      if (data.success) {
+        this.showAlert(data.success, data.message);
+        this.getAll();
+      } else {
+        this.showAlert(data.success, data.message);
+      }
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    })
+  }
+
+  actualizarAgente(id: any) {
+    this.serviceAgente.update(this.agente, id).then(data => {
+      this.showAlert(data.success, data.message);
+
+      if (data.success) {
+        this.mForma.reset();
+        this.getAll();
+      }
+
+      console.log(data);
+    }).catch(error => {
+      this.showAlert(false, error.message)
+    });
   }
 
   modificar(id: any) {
+    this.tipoForm = 'actualizar'
+    this.serviceAgente.getById(id).then(data => {
+      this.agente = data[0];
+      console.log(this.agente);
 
+      this.mForma.setValue({
+        nombres: this.agente.nombres,
+        apellidos: this.agente.apellidos,
+        direccion: this.agente.direccion,
+        telefono: this.agente.telefono,
+        nacimiento: this.agente.nacimiento,
+        concesionarioId: this.agente.concesionarioId,
+
+      });
+
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    });
   }
+
+
 
   generarFormulario() {
     return this.FormBuil.group({
@@ -105,10 +185,19 @@ export class AgentesComponent implements OnInit {
   }
 
   onSubmit() {
+    let idTemp = this.agente.id;
     this.agente = this.mForma.value as IAgentes;
-    this.insertarAgente();
+
+    if (this.tipoForm == 'actualizar') {
+      this.actualizarAgente(idTemp);
+    } else {
+      this.insertarAgente();
+    }
   }
 
+  limpiarCampos() {
+    this.mForma.reset();
+  }
 
   showAlert(success: boolean, message: string) {
 

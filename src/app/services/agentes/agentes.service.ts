@@ -39,4 +39,31 @@ export class AgentesService {
       })).toPromise();
   }
 
+  async getById(id: any) {
+    return await this.httpClient.get(this.url + this.recurso + '/' + id, {
+      headers: getHeaders()
+    }).pipe(
+      map((data: any) => {
+        return data;
+      })).toPromise();
+  }
+
+
+  async update(agente: any, id: number) {
+    const v = JSON.stringify(agente);
+    return await this.httpClient.put(this.url + this.recurso + '/' + id, v,
+      { headers: getHeaders() })
+      .pipe(map((data: any) => { return data; }))
+      .toPromise();
+  }
+
+
+  async delete(id: number) {
+    return await this.httpClient.delete(this.url + this.recurso + '/' + id,
+      { headers: getHeaders() }).pipe(
+        map((data: any) => {
+          return data;
+        })).toPromise();
+  }
+
 }
