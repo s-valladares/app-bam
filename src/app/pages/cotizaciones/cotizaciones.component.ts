@@ -41,6 +41,7 @@ export class CotizacionesComponent implements OnInit {
   search: string;
   fInicio: string;
   fFin: string;
+  searchVehiculo: string;
 
   constructor(
     private serviceCotizacion: CotizacionesService,
@@ -71,6 +72,7 @@ export class CotizacionesComponent implements OnInit {
     this.cotizacionId = {};
     this.fInicio = Date.now().toString();
     this.fFin = Date.now().toString();
+    this.searchVehiculo = '';
   }
 
   ngOnInit(): void {
@@ -185,6 +187,17 @@ export class CotizacionesComponent implements OnInit {
     this.serviceCotizacion.search(this.search).then(data => {
 
       this.cotizaciones = data;
+
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    });
+  }
+
+  searchVehiculos() {
+    console.log(this.searchVehiculo);
+    this.serviceVehiculo.search(this.searchVehiculo).then(data => {
+
+      this.vehiculos = data;
 
     }).catch(error => {
       this.showAlert(false, error.message);

@@ -69,4 +69,13 @@ export class VehiculosService {
         })).toPromise();
   }
 
+  async search(dato: string) {
+    return await this.httpClient.get(this.url + this.recurso + '/search/' + dato, {
+      headers: getHeaders()
+    }).pipe(
+      map((data: any) => {
+        return data;
+      })).toPromise();
+  }
+
 }
