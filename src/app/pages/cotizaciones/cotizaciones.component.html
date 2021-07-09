@@ -26,19 +26,21 @@
                         <div class="col">
                             <div class="form-group col padding-0">
                                 <label for="FechaFin">Fecha desde</label>
-                                <input class="form-control" type="date">
+                                <input class="form-control" type="date" [(ngModel)]="fInicio"
+                                    value="{{ fInicio | date:'yyyy-MM-dd' }}">
                             </div>
                         </div>
 
                         <div class="col-5 padding-0">
                             <div class="form-group col">
                                 <label for="FechaFin">Fecha hasta</label>
-                                <input class="form-control" type="date">
+                                <input class="form-control" type="date" [(ngModel)]="fFin">
                             </div>
                         </div>
 
                         <div class="col d-flex flex-column padding-0">
-                            <button type="button" class="btn btn-outline-secondary mt-auto mb-3">buscar</button>
+                            <button type="button" class="btn btn-outline-secondary mt-auto mb-3"
+                                (click)="getAllByRageDate()">buscar</button>
                         </div>
                     </div>
 

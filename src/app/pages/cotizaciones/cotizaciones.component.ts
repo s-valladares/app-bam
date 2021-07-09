@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -29,7 +30,6 @@ export class CotizacionesComponent implements OnInit {
   clientes: IClientes[];
   concesionarios: IConcesionarios[];
   agentes: IAgentes[];
-  loading: boolean;
   submitted = false;
   mForma: FormGroup;
   today: any;
@@ -39,6 +39,8 @@ export class CotizacionesComponent implements OnInit {
   modalRef: any;
   totalCotizacion: number;
   search: string;
+  fInicio: string;
+  fFin: string;
 
   constructor(
     private serviceCotizacion: CotizacionesService,
@@ -50,7 +52,7 @@ export class CotizacionesComponent implements OnInit {
     private serviceConcesionarios: ConcesionariosService,
     private serviceAgente: AgentesService
   ) {
-    this.loading = false;
+
     this.cotizacion = Cotizacion.empty();
     this.cotizaciones = [];
     this.vehiculos = [];
@@ -67,6 +69,8 @@ export class CotizacionesComponent implements OnInit {
     this.totalCotizacion = 0;
     this.search = '';
     this.cotizacionId = {};
+    this.fInicio = Date.now().toString();
+    this.fFin = Date.now().toString();
   }
 
   ngOnInit(): void {
@@ -77,59 +81,67 @@ export class CotizacionesComponent implements OnInit {
     this.getAllAgentes();
   }
 
+  getAllByRageDate() {
+
+    this.serviceCotizacion.getAllByRageDate(this.fInicio, this.fFin).then(data => {
+      this.cotizaciones = data;
+      console.log(this.cotizaciones);
+
+    }).catch(error => {
+      this.toast.error('Ocurrió un error al obtener las cotizaciones');
+
+    });
+  }
+
   getAll() {
-    this.loading = true;
+
     this.serviceCotizacion.getAll().then(data => {
       this.cotizaciones = data;
       console.log(this.cotizaciones);
-      this.loading = false;
+
     }).catch(error => {
       this.toast.error('Ocurrió un error al obtener los agentes');
-      this.loading = false;
+
     });
   }
 
   getAllVehiculos() {
-    this.loading = true;
     this.serviceVehiculo.getAll().then(data => {
       this.vehiculos = data;
       console.log(this.vehiculos);
-      this.loading = false;
+
     }).catch(error => {
       this.showAlert(false, error.message)
     });
   }
 
   getAllClientes() {
-    this.loading = true;
     this.serviceClientes.getAll().then(data => {
       this.clientes = data;
       console.log(this.clientes);
-      this.loading = false;
+
     }).catch(error => {
       this.showAlert(false, error.message);
-      this.loading = false;
+
     });
   }
 
   getAllConcesionarios() {
-    this.loading = true;
     this.serviceConcesionarios.getAll().then(data => {
       this.concesionarios = data;
       console.log(this.concesionarios);
-      this.loading = false;
+
     }).catch(error => {
       this.showAlert(false, error.message);
-      this.loading = false;
+
     });
   }
 
   getAllAgentes() {
-    this.loading = true;
     this.serviceAgente.getAll().then(data => {
       this.agentes = data;
       console.log(this.agentes);
-      this.loading = false;
+
     }).catch(error => {
       this.showAlert(false, error.message)
     });
@@ -171,11 +183,6 @@ export class CotizacionesComponent implements OnInit {
   searchCotizacion() {
     console.log(this.search);
     this.serviceCotizacion.search(this.search).then(data => {
-      console.log(data);
-      if (!data.success) {
-        this.showAlert(data.success, data.message);
-        return;
-      }
 
       this.cotizaciones = data;
 

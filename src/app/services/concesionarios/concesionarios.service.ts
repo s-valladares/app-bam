@@ -27,7 +27,6 @@ export class ConcesionariosService {
       })).toPromise();
   }
 
-
   async new(concesionario: IConcesionarios) {
     const lDatos = JSON.stringify(concesionario);
     return await this.httpClient.post(this.url + this.recurso, lDatos, {

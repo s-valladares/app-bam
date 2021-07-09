@@ -37,6 +37,15 @@ export class CotizacionesService {
       })).toPromise();
   }
 
+  async getAllByRageDate(inicio: string, fin: string) {
+    return await this.httpClient.get(this.url + this.recurso + '/fecha/' + inicio + '/' + fin, {
+      headers: getHeaders()
+    }).pipe(
+      map((data: any) => {
+        return data;
+      })).toPromise();
+  }
+
 
   async new(cotizacion: ICotizacion) {
     const lDatos = JSON.stringify(cotizacion);
